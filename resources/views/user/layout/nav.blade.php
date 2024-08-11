@@ -83,7 +83,7 @@
     <div class="menu-mobile">
         <ul class="main-menu-m">
             <li>
-                <a href="{{ url('/dashboard') }}">Home</a>
+                <a href="{{ url('/') }}">Home</a>
                 <span class="arrow-main-menu-m">
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
                 </span>

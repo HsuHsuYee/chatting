@@ -14,11 +14,11 @@ use App\Http\Controllers\OrderController;
 use App\Http\Middleware\CheckUserOrAdmin;
 use App\Http\Controllers\ProductController;
 
-Route::get('/', function () {
-    $categories = Category::with('subCategories')->get();
-    $products = Product::with('subcategories')->get();
-    return view('user.home', compact('products', 'categories'));
-});
+// Route::get('/', function () {
+//     $categories = Category::with('subCategories')->get();
+//     $products = Product::with('subcategories')->get();
+//     return view('user.home', compact('products', 'categories'));
+// });
 
 Route::middleware('admin')->group(function () {
     
@@ -80,6 +80,6 @@ Route::get('/product', [ProductController::class, 'UserProduct'])->name('UserPro
     Route::get('search', [ProductController::class, 'search'])->name('search');
     Route::get('searchCat', [ProductController::class, 'searchCat'])->name('searchCat');
 Route::middleware('user_admin')->group(function () {
-    Route::get('/dashboard', [ProductController::class, 'dashboard'])->name('dashboard');
+    Route::get('/', [ProductController::class, 'dashboard'])->name('dashboard');
 });
 
