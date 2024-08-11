@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Storage;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Payment;
@@ -12,6 +11,7 @@ use App\Models\feedback;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -146,42 +146,36 @@ class ProductController extends Controller
 
     public function subcategoryEdit(Request $request, $id)
     {
-        $subcategories = SubCategory::get();
+        $categories = Category::get();
         $subcategory = SubCategory::where('id', $id)->first();
-        return view('admin.subCategory.edit', compact('subcategory','subcategories'));
+        return view('admin.subCategory.edit', compact('subcategory','categories'));
     }
 
     public function subcategoryUpdate(Request $request, $id)
-    {
-        $subcategory = SubCategory::where('id', $id)->first();
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg',
-        ]);
+{
+    $subcategory = SubCategory::findOrFail($id);
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'category_id' => 'required|exists:categories,id',
+        'image' => 'nullable|image|mimes:jpeg,webp,png,jpg',
+    ]);
+    $subcategory->name = $validated['name'];
+    $subcategory->category_id = $validated['category_id'];
 
-        $subcategory->name = $request->name;
-        $subcategory->category_id = $request->category_id;
-        if ($request->hasFile('images')) {
-            // Delete old images
-            if ($subcategory->images) {
-                $oldImages = json_decode($subcategory->images, true);
-                foreach ($oldImages as $image) {
-                    Storage::disk('public')->delete($image);
-                }
-            }
-
-            // Store new images
-            $images = [];
-            foreach ($request->file('images') as $image) {
-                $images[] = $image->store('categories', 'public');
-            }
-            // Store new image paths as JSON in the database
-            $subcategory->images = json_encode($images);
+    if ($request->hasFile('image')) {
+        // Delete the old image
+        if ($subcategory->image) {
+            Storage::disk('public')->delete($subcategory->image);
         }
-        $subcategory->save();
-        return redirect()->route('subcategoryList')->with('success', 'SubCatagory updated successfully.', compact('subcategory'));
+
+        // Store the new image
+        $subcategory->image = $request->file('image')->store('subcategories', 'public');
     }
+
+    $subcategory->save();
+
+    return redirect()->route('subcategoryList')->with('success', 'SubCategory updated successfully.');
+}
 
     public function subcategoryDestory($id)
     {
