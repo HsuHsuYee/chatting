@@ -51,13 +51,13 @@
             <label for="images">Images</label>
             <input type="file" name="images[]" id="images" class="form-control" multiple>
             <div class="mt-2">
-                @foreach ($product->images as $image)
-                    <img src="{{ asset('storage/' . $image) }}" width="50" height="50">
-                @endforeach
+                {{-- @foreach ($product->images as $image) --}}
+                    <img src="{{ asset($subcategory->image) }}" width="50" height="50">
+                {{-- @endforeach --}}
             </div>
         </div>
         <div class="form-group">
-            <label for="carBrand">Car Brand</label>
+            <label for="carBrand">Product Name</label>
             <input type="text" name="carBrand" id="carBrand" class="form-control" value="{{ old('carBrand',$product->carBrand) }}" required>
         </div>
         <div class="form-group">

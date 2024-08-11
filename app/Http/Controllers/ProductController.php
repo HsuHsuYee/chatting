@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Storage;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Payment;
@@ -11,7 +12,6 @@ use App\Models\feedback;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -26,7 +26,7 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'images.*' => 'nullable|image', // Ensure each file is an image
+            'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg', // Ensure each file is an image
         ]);
 
         // Create the category
@@ -67,7 +67,7 @@ class ProductController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'images.*' => 'nullable|image',
+            'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg',
         ]);
 
         // Update the category name
@@ -122,23 +122,20 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'images.*' => 'nullable|image',
+            'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg',
         ]);
 
         $subcategory = SubCategory::create([
             'name' => $validated['name'],
             'category_id' => $validated['category_id'],
         ]);
-        if ($request->hasFile('images')) {
-            $images = [];
-            foreach ($request->file('images') as $image) {
-                // Store image in 'public/categories' directory and get the file path
-                $images[] = $image->store('subcategories', 'public');
-            }
-            // Store image paths as JSON in the database
-            $subcategory->images = json_encode($images);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $path = $image->store('subcategories', 'public'); // Store image in 'public/subcategories'
+            $subcategory->image = $path; // Save the image path to the database
             $subcategory->save();
         }
+    
         return redirect()->route('subcategoryList')->with('success', 'SubCategory created successfully.', compact('subcategory'));
     }
 
@@ -149,8 +146,9 @@ class ProductController extends Controller
 
     public function subcategoryEdit(Request $request, $id)
     {
-        $category = SubCategory::where('id', $id)->first();
-        return view('admin.category.edit', compact('category'));
+        $subcategories = SubCategory::get();
+        $subcategory = SubCategory::where('id', $id)->first();
+        return view('admin.subCategory.edit', compact('subcategory','subcategories'));
     }
 
     public function subcategoryUpdate(Request $request, $id)
@@ -159,7 +157,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'images.*' => 'nullable|image',
+            'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg',
         ]);
 
         $subcategory->name = $request->name;
@@ -229,7 +227,7 @@ class ProductController extends Controller
             'carModel' => 'required|string|max:255',
             'price' => 'required',
             'images' => 'required|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'carBrand' => 'required|string',
             'madeIn' => 'required|string',
         ]);
@@ -278,7 +276,7 @@ class ProductController extends Controller
             'stock' => 'required|integer',
             'carModel' => 'required|string|max:255',
             'price' => 'required',
-            'images.*' => 'nullable|image',
+            'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg,svg',
             'carBrand' => 'required|string|max:255',
             'madeIn' => 'required|string|max:255',
         ]);

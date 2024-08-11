@@ -14,6 +14,7 @@
                     <th>Quantity</th>
                     <th>Total</th>
                     <th>Status</th>
+                    <th>Image</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -25,6 +26,7 @@
                         <td>{{ $order->qty }}</td>
                         <td>{{ $order->totalPrice }}</td>
                         <td>{{ ucfirst($order->status) }}</td>
+                        <td><img src="{{ asset('storage/' . $order->payment_screenshot) }}" width="100" height="100"></td>
                         <td>
                             @if($order->status == 'pending')
                                 <form action="{{ route('admin.orders.accept') }}" method="POST">

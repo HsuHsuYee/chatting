@@ -62,7 +62,7 @@
             <input type="file" name="images[]" id="images" class="form-control" multiple required>
         </div>
         <div class="form-group">
-            <label for="carBrand">Car Brand</label>
+            <label for="carBrand">Product Name</label>
             <input type="text" name="carBrand" id="carBrand" class="form-control" value="{{ old('carBrand') }}" required>
         </div>
         <div class="form-group">

@@ -97,7 +97,19 @@ class CartController extends Controller
 
     public function placeOrder(Request $request)
     {
+        $validated = $request->validate([
+            'payment_screenshot' => 'nullable|image|mimes:jpeg,webp,png,jpg', // Adjust size and types as needed
+            'phone' => 'required|string',
+            'address' => 'required|string',
+            'payment_id' => 'required|string',
+        ]);
         $cartItems = Cart::where('user_id', Auth::id())->get();
+        $paymentScreenshotPath = null;
+
+    if ($request->hasFile('payment_screenshot')) {
+        $paymentScreenshot = $request->file('payment_screenshot');
+        $paymentScreenshotPath = $paymentScreenshot->store('payment_screenshots', 'public'); // Store image in 'public/payment_screenshots'
+    }
         foreach ($cartItems as $item) {
             Order::create([
                 'user_id' => Auth::id(),
@@ -106,7 +118,7 @@ class CartController extends Controller
                 'qty' => $item->qty,
                 'carModel' => $item->carModel,
                 'price' => $item->price,
-                'images' => $item->images,
+                'payment_screenshot' => $paymentScreenshotPath,
                 'carBrand' => $item->carBrand,
                 'madeIn' => $item->madeIn,
                 'totalPrice' => $item->totalPrice,

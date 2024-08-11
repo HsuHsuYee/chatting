@@ -70,7 +70,6 @@
                 @endauth
             </div>
         </div>
-
         <!-- Button show menu -->
         <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
             <span class="hamburger-box">
@@ -90,16 +89,8 @@
             </li>
             <li><a href="{{ route('UserProduct') }}">Shop</a></li>
             @auth
-            <li>
-                <div class="flex-c-m h-full p-r-25 bor6">
-                    <div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
-                        data-notify="{{ App\Models\Cart::where('user_id', auth()->user()->id)->count() }}">
-                        <a href="{{ route('cart.index') }}"><i class="zmdi zmdi-shopping-cart"></i></a>
-                    </div>
-                </div>
-            </li>
-            <li><a href="">Order List</a></li>
             <li><a href="http://127.0.0.1:8000/chatify">Chat</a></li>
+            <li><a href="{{ route('orderList') }}">Order List</a></li>
             @endauth
             <li><a href="{{ route('about') }}">About</a></li>
             <li><a href="{{ route('contact') }}">Contact</a></li>
@@ -117,3 +108,13 @@
         </ul>
     </div>
 </header>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.btn-show-menu-mobile').on('click', function() {
+            $(this).toggleClass('is-active');
+            $('.menu-mobile').slideToggle();
+        });
+    });
+</script>

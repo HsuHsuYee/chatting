@@ -26,7 +26,7 @@
                     <th>ID</th>
                     {{-- <th>SubCategory</th> --}}
                     <th>Car Model</th>
-                    <th>Car Brand</th>
+                    <th>Product Name</th>
                     <th>Made</th>
                     <th>Stock</th>
                     <th>Price</th>
