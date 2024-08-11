@@ -5,6 +5,11 @@
 <div class="container mt-3 bg-secondary text-info p-3">
     <span class="">Edit Product</span>
     <a href="{{ route('productList') }}" class="btn btn-info text-secondary float-end">Back</a>
+    <div class="mt-2 text-center">
+        @foreach ($product->images as $image)
+            <img src="{{ asset('storage/'.$image) }}" width="300" height="300">
+        @endforeach
+    </div>
     <form action="{{ route('productUpdate', $product->id) }}" class="mt-3" method="POST" enctype="multipart/form-data">
         @csrf
         @if ($errors->any())
@@ -32,7 +37,7 @@
         <div class="form-group">
             <label for="sub_category_id">SubCategory</label>
             <select name="sub_category_id" id="sub_category_id" class="form-control">
-                <option value="">Select SubCategory</option>
+                <option value="" {{ old('sub_category_id', $product->sub_category_id) == $item->id ? 'selected' : '' }}>Select SubCategory</option>
             </select>
         </div>
         <div class="form-group">
@@ -50,11 +55,7 @@
         <div class="form-group">
             <label for="images">Images</label>
             <input type="file" name="images[]" id="images" class="form-control" multiple>
-            <div class="mt-2">
-                {{-- @foreach ($product->images as $image) --}}
-                    <img src="{{ asset($subcategory->image) }}" width="50" height="50">
-                {{-- @endforeach --}}
-            </div>
+            
         </div>
         <div class="form-group">
             <label for="carBrand">Product Name</label>

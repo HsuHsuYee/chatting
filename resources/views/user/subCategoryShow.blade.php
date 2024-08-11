@@ -48,7 +48,7 @@
                             @foreach ($subCategories as $subCategory)
                                 <div class="col-4 mb-3 d-flex align-items-center justify-content-center" style="height: 200px;">
                                     <div class="position-relative" style="width: 100%; height: 100%;">
-                                        <img src="{{ asset($subCategory->image) }}" alt="{{ $subCategory->name }}" class="img-fluid"
+                                        <img src="{{ asset('storage/'.$subCategory->image) }}" alt="{{ $subCategory->name }}" class="img-fluid"
                                             style="object-fit: cover; width: 100%; height: 100%;">
                                         <div class="overlay">
                                             <a href="{{ route('subcategoryAllShow', $subCategory->id) }}" class="overlay-text text-decoration-none text-center">
