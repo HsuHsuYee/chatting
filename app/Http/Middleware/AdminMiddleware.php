@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check()) {
-        return redirect('dashboard');
+            return $next($request);
             
         }
         

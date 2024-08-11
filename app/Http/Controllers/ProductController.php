@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    //admin
-
     //category
     public function categoryList()
     {
@@ -222,8 +220,6 @@ class ProductController extends Controller
         return response()->json($subcategories);
     }
 
-
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -244,7 +240,7 @@ class ProductController extends Controller
             $imagePaths[] = $path;
         }
 
-        $product = Product::create([
+        Product::create([
             'category_id' => $validated['category_id'],
             'sub_category_id' => $validated['sub_category_id'],
             'stock' => $validated['stock'],
@@ -257,7 +253,6 @@ class ProductController extends Controller
 
         return redirect()->route('productList')->with('success', 'Product created successfully.');
     }
-
 
     public function edit(Request $request, $id)
     {
@@ -304,7 +299,6 @@ class ProductController extends Controller
             $validated['images'] = $product->images;
         }
 
-        // Update the product with validated data
         $product->update($validated);
 
         return redirect()->route('productList')->with('success', 'Product updated successfully');
@@ -328,7 +322,6 @@ class ProductController extends Controller
         return back()->with('error', 'Product not found');
     }
 
-
     //user
     public function UserProduct()
     {
@@ -342,12 +335,6 @@ class ProductController extends Controller
         $products = Product::where('id', $id)->first();
         return view('user.productDetail', compact('products'));
     }
-
-    // public function ShoppingCart()
-    // {
-    //     $products = Product::all();
-    //     return view('user.shoppingCart', compact('products'));
-    // }
 
     public function about()
     {
@@ -365,14 +352,13 @@ class ProductController extends Controller
     public function subcategoryShow(Request $request, $id)
     {
         $subCategories = SubCategory::with('products', 'category')->where('category_id', $id)->get();
-        // $products = Product::where('category_id', $subCategories[0]->category->id)->get();
         return view('user.subCategoryShow', compact('subCategories'));
     }
     public function subcategoryAllShow(Request $request, $id)
     {
         $subCategories = SubCategory::with('products', 'category')->where('category_id', $id)->get();
         $products = Product::where('sub_category_id', $id)->get();
-        $subCat = $products[0]->sub_category_id;
+        $subCat = $products->where('sub_categroy_id',$id)->first();
         $subCatName = SubCategory::where('id',$subCat)->first();
         return view('user.subCategoryAllShow', compact('subCategories', 'products','subCat','subCatName'));
     }
@@ -402,11 +388,7 @@ class ProductController extends Controller
     public function searchCat(Request $request)
     {
         $search = $request->input('searchCat');
-        $searchId = $request->input('subCat');
-// dd($searchId);
-        // $subCategories = SubCategory::with('products', 'category')->where('id', $searchId)->get();
-        // $categoryId = $subCategories[0]->id;
-        // dd($categoryId);    
+        $searchId = $request->input('subCat');  
         $products = Product::where('sub_category_id', $searchId)
             ->where(function ($query) use ($search) {
                 $query->where('carModel', 'LIKE', '%' . $search . '%')

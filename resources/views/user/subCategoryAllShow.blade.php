@@ -39,7 +39,9 @@
                 </div>
                 <div class="p-b-10">
                     <h3 class="ltext-103 cl5">
+                        @if($subCatName)
                         {{ $subCatName->name }}
+                        @endif
                     </h3>
                 </div>
                 <section class="bg0 p-t-23 p-b-130">

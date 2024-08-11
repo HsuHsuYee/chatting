@@ -70,7 +70,7 @@
                         <a class="nav-link text-dark" href="{{ route('productList') }}">Product</a>
                         <a class="nav-link text-dark" href="http://127.0.0.1:8000/chatify">Chat</a>
                         <a class="nav-link text-dark" href="{{ route('admin.orders') }}">Order</a>
-                        <a href="" class="btn-dark text-info "><x-app-layout></x-app-layout></a>
+                        {{-- <a href="" class="btn-dark text-white "><x-app-layout></x-app-layout></a> --}}
                     </div>
                 </div>
             </div>
@@ -85,6 +85,7 @@
                         <div class="offcanvas-header">
                             <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">GS<i
                                     class="fa-solid fa-hand"></i>SPsOf<i class="fa-solid fa-car"></i></h5>
+                                    <x-app-layout></x-app-layout>
                             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                                 aria-label="Close"></button>
                         </div>
@@ -95,6 +96,7 @@
                             <a class="nav-link text-dark" href="{{ route('productList') }}">Product</a>
                             <a class="nav-link text-dark" href="http://127.0.0.1:8000/chatify">Chat</a>
                             <a class="nav-link text-dark" href="{{ route('admin.orders') }}">Order</a>
+                           
                         </div>
                     </div>
                     <center class="fs-3 fw-bold text-center">Good Second Hand Spare Parts Of Car</center>
@@ -103,13 +105,13 @@
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+                    {{-- <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item ">
                                 <x-app-layout></x-app-layout>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </nav>
 
