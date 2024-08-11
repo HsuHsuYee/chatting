@@ -1,0 +1,460 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use App\Models\Order;
+use App\Models\Payment;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\feedback;
+use App\Models\SubCategory;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+
+class ProductController extends Controller
+{
+    //admin
+
+    //category
+    public function categoryList()
+    {
+        $category = Category::all();
+        return view('admin.category.index', compact('category'));
+    }
+
+    public function categoryStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'images.*' => 'nullable|image', // Ensure each file is an image
+        ]);
+
+        // Create the category
+        $category = Category::create([
+            'name' => $validated['name'],
+        ]);
+
+        // Handle image uploads if files are present
+        if ($request->hasFile('images')) {
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                // Store image in 'public/categories' directory and get the file path
+                $images[] = $image->store('categories', 'public');
+            }
+            // Store image paths as JSON in the database
+            $category->images = json_encode($images);
+            $category->save();
+        }
+
+        return redirect()->route('categoryList')->with('success', 'Category created successfully.');
+    }
+
+
+    public function categoryCreate()
+    {
+        return view('admin.category.create');
+    }
+
+    public function categoryEdit(Request $request, $id)
+    {
+        $category = Category::where('id', $id)->first();
+        return view('admin.category.edit', compact('category'));
+    }
+
+    public function categoryUpdate(Request $request, $id)
+    {
+        $category = Category::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'images.*' => 'nullable|image',
+        ]);
+
+        // Update the category name
+        $category->name = $validated['name'];
+
+        // Handle image uploads if files are present
+        if ($request->hasFile('images')) {
+            // Delete old images
+            if ($category->images) {
+                $oldImages = json_decode($category->images, true);
+                foreach ($oldImages as $image) {
+                    Storage::disk('public')->delete($image);
+                }
+            }
+
+            // Store new images
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                $images[] = $image->store('categories', 'public');
+            }
+            // Store new image paths as JSON in the database
+            $category->images = json_encode($images);
+        }
+
+        $category->save();
+
+        return redirect()->route('categoryList')->with('success', 'Category updated successfully.');
+    }
+
+
+    public function categoryDestory($id)
+    {
+        $category = Category::where('id', $id)->first();
+        if ($category->images) {
+            $oldImages = json_decode($category->images, true);
+            foreach ($oldImages as $image) {
+                Storage::disk('public')->delete($image);
+            }
+        }
+        $category->delete();
+        return back()->with('success', 'Category destoryed successfully');
+    }
+
+    public function subcategoryList()
+    {
+        $subcategory = SubCategory::all();
+        return view('admin.subcategory.index', compact('subcategory'));
+    }
+
+    public function subcategoryStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'images.*' => 'nullable|image',
+        ]);
+
+        $subcategory = SubCategory::create([
+            'name' => $validated['name'],
+            'category_id' => $validated['category_id'],
+        ]);
+        if ($request->hasFile('images')) {
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                // Store image in 'public/categories' directory and get the file path
+                $images[] = $image->store('subcategories', 'public');
+            }
+            // Store image paths as JSON in the database
+            $subcategory->images = json_encode($images);
+            $subcategory->save();
+        }
+        return redirect()->route('subcategoryList')->with('success', 'SubCategory created successfully.', compact('subcategory'));
+    }
+
+    public function subcategoryCreate()
+    {
+        return view('admin.subcategory.create');
+    }
+
+    public function subcategoryEdit(Request $request, $id)
+    {
+        $category = SubCategory::where('id', $id)->first();
+        return view('admin.category.edit', compact('category'));
+    }
+
+    public function subcategoryUpdate(Request $request, $id)
+    {
+        $subcategory = SubCategory::where('id', $id)->first();
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'images.*' => 'nullable|image',
+        ]);
+
+        $subcategory->name = $request->name;
+        $subcategory->category_id = $request->category_id;
+        if ($request->hasFile('images')) {
+            // Delete old images
+            if ($subcategory->images) {
+                $oldImages = json_decode($subcategory->images, true);
+                foreach ($oldImages as $image) {
+                    Storage::disk('public')->delete($image);
+                }
+            }
+
+            // Store new images
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                $images[] = $image->store('categories', 'public');
+            }
+            // Store new image paths as JSON in the database
+            $subcategory->images = json_encode($images);
+        }
+        $subcategory->save();
+        return redirect()->route('subcategoryList')->with('success', 'SubCatagory updated successfully.', compact('subcategory'));
+    }
+
+    public function subcategoryDestory($id)
+    {
+        $subcategory=SubCategory::where('id', $id)->first();
+        if ($subcategory->images) {
+            $oldImages = json_decode($subcategory->images, true);
+            foreach ($oldImages as $image) {
+                Storage::disk('public')->delete($image);
+            }
+        }
+        $subcategory->delete();
+        return back()->with('success', 'SubCategory destoryed successfully');
+    }
+
+    //product
+    public function index()
+    {
+        $categories = Category::with('subCategories')->get();
+        $product = Product::with('subcategories')->get();
+        return view('admin.product.index', compact('categories', 'product'));
+    }
+
+    public function create(Request $request)
+    {
+        $categories = Category::all();
+        $subcategories = collect();
+
+        return view('admin.product.create', compact('categories', 'subcategories'));
+    }
+
+    public function getSubcategories($categoryId)
+    {
+        $subcategories = SubCategory::where('category_id', $categoryId)->get();
+        return response()->json($subcategories);
+    }
+
+
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'sub_category_id' => 'sometimes|exists:sub_categories,id',
+            'stock' => 'required|integer',
+            'carModel' => 'required|string|max:255',
+            'price' => 'required',
+            'images' => 'required|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'carBrand' => 'required|string',
+            'madeIn' => 'required|string',
+        ]);
+
+        $imagePaths = [];
+        foreach ($request->file('images') as $image) {
+            $path = $image->store('images', 'public');
+            $imagePaths[] = $path;
+        }
+
+        $product = Product::create([
+            'category_id' => $validated['category_id'],
+            'sub_category_id' => $validated['sub_category_id'],
+            'stock' => $validated['stock'],
+            'carModel' => $validated['carModel'],
+            'price' => $validated['price'],
+            'images' => $imagePaths,
+            'carBrand' => $validated['carBrand'],
+            'madeIn' => $validated['madeIn']
+        ]);
+
+        return redirect()->route('productList')->with('success', 'Product created successfully.');
+    }
+
+
+    public function edit(Request $request, $id)
+    {
+        $categories = Category::all();
+        $subcategories = collect();
+        $product = Product::where('id', $id)->first();
+        return view('admin.product.edit', compact('product', 'categories', 'subcategories'));
+    }
+
+    // Update an existing product
+    public function update(Request $request, $id)
+    {
+        $product = Product::find($id);
+
+        $validated = $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'sub_category_id' => [
+                'nullable',
+                Rule::exists('sub_categories', 'id')->where(function ($query) use ($request) {
+                    return $query->where('category_id', $request->category_id);
+                }),
+            ],
+            'stock' => 'required|integer',
+            'carModel' => 'required|string|max:255',
+            'price' => 'required',
+            'images.*' => 'nullable|image',
+            'carBrand' => 'required|string|max:255',
+            'madeIn' => 'required|string|max:255',
+        ]);
+
+        // Handle images upload if any
+        if ($request->hasFile('images')) {
+            // Delete old images
+            foreach ($product->images as $imagePath) {
+                Storage::disk('public')->delete($imagePath);
+            }
+
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                $images[] = $image->store('products', 'public');
+            }
+            $validated['images'] = $images;
+        } else {
+            $validated['images'] = $product->images;
+        }
+
+        // Update the product with validated data
+        $product->update($validated);
+
+        return redirect()->route('productList')->with('success', 'Product updated successfully');
+    }
+
+
+    // Delete a product
+    public function productDelete($id)
+    {
+        $product = Product::find($id);
+
+        if ($product) {
+            foreach ($product->images as $imagePath) {
+                Storage::disk('public')->delete($imagePath);
+            }
+            $product->delete();
+
+            return back()->with('success', 'Product deleted successfully');
+        }
+
+        return back()->with('error', 'Product not found');
+    }
+
+
+    //user
+    public function UserProduct()
+    {
+        $products = Product::with('subCategories')->get();
+        $categories = Category::with('subCategories')->get();
+        return view('user.product', compact('products', 'categories'));
+    }
+
+    public function UserProductDetail($id)
+    {
+        $products = Product::where('id', $id)->first();
+        return view('user.productDetail', compact('products'));
+    }
+
+    // public function ShoppingCart()
+    // {
+    //     $products = Product::all();
+    //     return view('user.shoppingCart', compact('products'));
+    // }
+
+    public function about()
+    {
+        $products = Product::all();
+        return view('user.about', compact('products'));
+    }
+
+    public function contact()
+    {
+        $products = Product::all();
+        return view('user.contact', compact('products'));
+    }
+
+
+    public function subcategoryShow(Request $request, $id)
+    {
+        $subCategories = SubCategory::with('products', 'category')->where('category_id', $id)->get();
+        // $products = Product::where('category_id', $subCategories[0]->category->id)->get();
+        return view('user.subCategoryShow', compact('subCategories'));
+    }
+    public function subcategoryAllShow(Request $request, $id)
+    {
+        $subCategories = SubCategory::with('products', 'category')->where('category_id', $id)->get();
+        $products = Product::where('sub_category_id', $id)->get();
+        $subCat = $products[0]->sub_category_id;
+        $subCatName = SubCategory::where('id',$subCat)->first();
+        return view('user.subCategoryAllShow', compact('subCategories', 'products','subCat','subCatName'));
+    }
+
+    public function show($id)
+    {
+        $product = Product::with(['category', 'subcategory'])->findOrFail($id);
+        return response()->json($product);
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $products = Product::where('carModel', 'LIKE', '%' . $search . '%')
+            ->orWhere('price', 'LIKE', '%' . $search . '%')
+            ->orWhere('carBrand', 'LIKE', '%' . $search . '%')
+            ->orWhere('madeIn', 'LIKE', '%' . $search . '%')
+            ->orWhereHas('category', function ($query) use ($search) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            })
+            ->orWhereHas('subcategories', function ($query) use ($search) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            })
+            ->get();
+        return view('user.search', compact('products'));
+    }
+    public function searchCat(Request $request)
+    {
+        $search = $request->input('searchCat');
+        $searchId = $request->input('subCat');
+// dd($searchId);
+        // $subCategories = SubCategory::with('products', 'category')->where('id', $searchId)->get();
+        // $categoryId = $subCategories[0]->id;
+        // dd($categoryId);    
+        $products = Product::where('sub_category_id', $searchId)
+            ->where(function ($query) use ($search) {
+                $query->where('carModel', 'LIKE', '%' . $search . '%')
+                    ->orWhere('price', 'LIKE', '%' . $search . '%')
+                    ->orWhere('carBrand', 'LIKE', '%' . $search . '%')
+                    ->orWhere('madeIn', 'LIKE', '%' . $search . '%')
+                    ->orWhereHas('category', function ($query) use ($search) {
+                        $query->where('name', 'LIKE', '%' . $search . '%');
+                    })
+                    ->orWhereHas('subcategories', function ($query) use ($search) {
+                        $query->where('name', 'LIKE', '%' . $search . '%');
+                    });
+            })
+            ->get();
+        return view('user.search', compact('products'));
+    }
+
+    public function feedback(Request $request)
+    {
+        $validatedData = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'rate' => 'required|numeric|min:1|max:5',
+            'feedback' => 'nullable|string',
+        ]);
+
+        $feedback = Feedback::create($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'feedback' => $feedback
+        ]);
+    }
+    
+    public function dashboard()
+    {
+        if(auth()->user()->role ==='admin'){
+            $categories = Category::with('subCategories')->get();
+            $products = Product::get();
+            $subCategories = SubCategory::get();
+            $orders = Order::get();
+            $payments = Payment::get();
+            $users = User::get();
+            return view('admin.home', compact('products', 'categories', 'subCategories', 'orders', 'payments', 'users'));
+        }
+        if(auth()->user()->role ==='user') {
+            $categories = Category::with('subCategories')->get();
+            $products = Product::with('subcategories')->get();
+            return view('user.home', compact('products', 'categories'));
+        }
+    }
+}
