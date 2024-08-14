@@ -20,7 +20,7 @@ class AdminMiddleware
             
         }
         
-        return redirect('login');
+        return redirect('/');
         
     }
 }

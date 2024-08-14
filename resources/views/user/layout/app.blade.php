@@ -57,7 +57,7 @@
     </style>
 </head>
 
-<body class="animsition">
+<body>
 
     <div id="content" class="mt-lg-5 pt-lg-2">
         @yield('content')

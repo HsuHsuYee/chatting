@@ -16,7 +16,7 @@ class CheckUserOrAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check()) {
-            return redirect('login');
+            return redirect('/');
         }
         
         return $next($request);

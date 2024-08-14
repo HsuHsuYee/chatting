@@ -75,10 +75,10 @@
                                     @if (isset($product->images[0]))
                                         <img src="{{ asset('storage/' . $product->images[0]) }}"
                                             alt="{{ $product->carModel }}" class="card-img-top"
-                                            style="object-fit: cover; height: 200px;">
+                                            style="object-fit: cover; height: 250px;">
                                     @else
                                         <img src="https://via.placeholder.com/150" alt="No Image" class="card-img-top"
-                                            style="object-fit: cover; height: 200px;">
+                                            style="object-fit: cover; height: 250px;">
                                     @endif
                                     <div class="card-body">
                                         <h5 class="card-title">Product Name:{{ $product->carBrand }}</h5>
