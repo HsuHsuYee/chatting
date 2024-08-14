@@ -414,21 +414,4 @@ class ProductController extends Controller
         ]);
     }
     
-    public function dashboard()
-    {
-        if(auth()->user()->role ==='admin'){
-            $categories = Category::with('subCategories')->get();
-            $products = Product::get();
-            $subCategories = SubCategory::get();
-            $orders = Order::get();
-            $payments = Payment::get();
-            $users = User::get();
-            return view('admin.home', compact('products', 'categories', 'subCategories', 'orders', 'payments', 'users'));
-        }
-        if(auth()->user()->role ==='user') {
-            $categories = Category::with('subCategories')->get();
-            $products = Product::with('subcategories')->get();
-            return view('user.home', compact('products', 'categories'));
-        }
-    }
 }

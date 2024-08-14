@@ -8,24 +8,15 @@
         <div class="wrap-menu-desktop">
             <nav class="limiter-menu-desktop p-l-45">
                 <!-- Logo desktop -->
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="text-white">
-                        GS<i class="fa-solid fa-hand"></i>SPsOf<i class="fa-solid fa-car"></i>
-                    </a>
-                @else
                     <a href="{{ url('/') }}" class="text-white">
                         GS<i class="fa-solid fa-hand"></i>SPsOf<i class="fa-solid fa-car"></i>
                     </a>
-                    @endif
 
                     <!-- Menu desktop -->
                     <div class="menu-desktop">
                         <ul class="main-menu">
-                            @auth
-                                <li><a href="{{ url('/dashboard') }}">Home</a></li>
-                            @else
+                            
                                 <li><a href="{{ url('/') }}">Home</a></li>
-                                @endif
                                 <li><a href="{{ route('UserProduct') }}">Shop</a></li>
                                 <li><a href="{{ route('about') }}">About</a></li>
                                 @auth
@@ -65,13 +56,8 @@
             <div class="wrap-header-mobile">
                 <!-- Logo mobile -->
                 <div class="logo-mobile">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="text-dark">GS<i class="fa-solid fa-hand"></i>SPsOf<i
-                                class="fa-solid fa-car"></i></a>
-                    @else
                         <a href="{{ url('/') }}" class="text-dark">GS<i class="fa-solid fa-hand"></i>SPsOf<i
                                 class="fa-solid fa-car"></i></a>
-                        @endif
                     </div>
 
                     <!-- Icon header -->
@@ -97,11 +83,7 @@
                 <div class="menu-mobile">
                     <ul class="main-menu-m">
                         <li>
-                            @auth
-                                <a href="{{ url('/dashboard') }}">Home</a>
-                            @else
                                 <a href="{{ url('/') }}">Home</a>
-                                @endif
                                 <span class="arrow-main-menu-m">
                                     <i class="fa fa-angle-right" aria-hidden="true"></i>
                                 </span>

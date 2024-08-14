@@ -64,7 +64,7 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <a class="nav-link active text-dark" href="{{ route('dashboard') }}">Dashboard</a>
+                    <a class="nav-link active text-dark" href="{{ url('/') }}">Dashboard</a>
                     <a class="nav-link text-dark" href="{{ route('categoryList') }}">Category</a>
                     <a class="nav-link text-dark" href="{{ route('subcategoryList') }}">SubCategory</a>
                     <a class="nav-link text-dark" href="{{ route('productList') }}">Product</a>
@@ -90,7 +90,7 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <a class="nav-link active text-dark" href="{{ route('dashboard') }}">Dashboard</a>
+                        <a class="nav-link active text-dark" href="{{ url('/') }}">Dashboard</a>
                         <a class="nav-link text-dark" href="{{ route('categoryList') }}">Category</a>
                         <a class="nav-link text-dark" href="{{ route('subcategoryList') }}">SubCategory</a>
                         <a class="nav-link text-dark" href="{{ route('productList') }}">Product</a>
