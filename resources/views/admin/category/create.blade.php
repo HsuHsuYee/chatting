@@ -11,6 +11,10 @@
             <label for="name">Category Name</label>
             <input type="text" name="name" id="name" class="form-control" required>
         </div>
+        <div class="form-group">
+            <label for="image">Images</label>
+            <input type="file" name="image" id="image" class="form-control">
+        </div>
         <button type="submit" class="btn btn-info text-secondary mt-2">Add Category</button>
     </form>
 </div>

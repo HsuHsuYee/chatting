@@ -34,17 +34,23 @@ class ProductController extends Controller
             'name' => $validated['name'],
         ]);
 
-        // Handle image uploads if files are present
-        if ($request->hasFile('images')) {
-            $images = [];
-            foreach ($request->file('images') as $image) {
-                // Store image in 'public/categories' directory and get the file path
-                $images[] = $image->store('categories', 'public');
-            }
-            // Store image paths as JSON in the database
-            $category->images = json_encode($images);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $path = $image->store('categories', 'public'); // Store image in 'public/subcategories'
+            $category->image = $path; // Save the image path to the database
             $category->save();
         }
+        // Handle image uploads if files are present
+        // if ($request->hasFile('images')) {
+        //     $images = [];
+        //     foreach ($request->file('images') as $image) {
+        //         // Store image in 'public/categories' directory and get the file path
+        //         $images[] = $image->store('categories', 'public');
+        //     }
+        //     // Store image paths as JSON in the database
+        //     $category->images = json_encode($images);
+        //     $category->save();
+        // }
 
         return redirect()->route('categoryList')->with('success', 'Category created successfully.');
     }
@@ -72,25 +78,33 @@ class ProductController extends Controller
 
         // Update the category name
         $category->name = $validated['name'];
-
-        // Handle image uploads if files are present
-        if ($request->hasFile('images')) {
-            // Delete old images
-            if ($category->images) {
-                $oldImages = json_decode($category->images, true);
-                foreach ($oldImages as $image) {
-                    Storage::disk('public')->delete($image);
-                }
+        if ($request->hasFile('image')) {
+            // Delete the old image
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
             }
-
-            // Store new images
-            $images = [];
-            foreach ($request->file('images') as $image) {
-                $images[] = $image->store('categories', 'public');
-            }
-            // Store new image paths as JSON in the database
-            $category->images = json_encode($images);
+    
+            // Store the new image
+            $category->image = $request->file('image')->store('categories', 'public');
         }
+        // Handle image uploads if files are present
+        // if ($request->hasFile('images')) {
+        //     // Delete old images
+        //     if ($category->images) {
+        //         $oldImages = json_decode($category->images, true);
+        //         foreach ($oldImages as $image) {
+        //             Storage::disk('public')->delete($image);
+        //         }
+        //     }
+
+        //     // Store new images
+        //     $images = [];
+        //     foreach ($request->file('images') as $image) {
+        //         $images[] = $image->store('categories', 'public');
+        //     }
+        //     // Store new image paths as JSON in the database
+        //     $category->images = json_encode($images);
+        // }
 
         $category->save();
 

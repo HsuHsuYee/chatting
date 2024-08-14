@@ -125,7 +125,7 @@
                 @foreach ($categories as $category)
                     <div class="col-4 mb-3 d-flex align-items-center justify-content-center" style="height: 200px;">
                         <div class="position-relative" style="width: 100%; height: 100%;">
-                            <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="img-fluid"
+                            <img src="{{ asset('storage/'.$category->image) }}" alt="{{ $category->name }}" class="img-fluid"
                                 style="object-fit: cover; width: 100%; height: 100%;">
                             <div class="overlay">
                                 <a href="{{ route('subcategoryShow', $category->id) }}" class="overlay-text text-decoration-none text-center">
