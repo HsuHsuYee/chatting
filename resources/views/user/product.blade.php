@@ -99,7 +99,7 @@
                                                         <p>Stock: {{ $product->stock }}</p>
                                                     @endif
                                                     <strong class="product-price">MMK: {{ $product->price }}</strong>
-                                                    <p>Brand: {{ $product->carBrand }}</p>
+                                                    <p>Product Name: {{ $product->carBrand }}</p>
                                                     <p>Made In: {{ $product->madeIn }}</p>
                                                 </div>
                                             </div>
