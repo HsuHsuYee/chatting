@@ -13,8 +13,9 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cartItems = Cart::where('user_id', Auth::id())->get();
+        $cartItems = Cart::with('products')->where('user_id', Auth::id())->get();
         $grandTotal = $cartItems->sum('totalPrice');
+        
         return view('user.cart', compact('cartItems', 'grandTotal'));
     }
     public function addToCart(Request $request)

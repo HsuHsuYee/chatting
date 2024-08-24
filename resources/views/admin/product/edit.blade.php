@@ -1,10 +1,9 @@
 @extends('admin.layout.app')
 
 @section('content')
-<hr>
 <div class="container mt-3 bg-secondary text-info p-3">
     <span class="">Edit Product</span>
-    <a href="{{ route('productList') }}" class="btn btn-info text-secondary float-end">Back</a>
+    <a href="{{ route('productList') }}" class="btn btn-info text-dark float-end">Back</a>
     <div class="mt-2 text-center">
         @foreach ($product->images as $image)
             <img src="{{ asset('storage/'.$image) }}" width="300" height="300">
@@ -65,7 +64,7 @@
             <label for="madeIn">Made In</label>
             <input type="text" name="madeIn" id="madeIn" class="form-control" value="{{ old('madeIn',$product->madeIn) }}" required>
         </div>
-        <button type="submit" class="btn btn-info text-secondary mt-2">Update Product</button>
+        <button type="submit" class="btn btn-info text-dark mt-2">Update Product</button>
     </form>
 </div>
 

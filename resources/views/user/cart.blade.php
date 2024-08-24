@@ -9,7 +9,7 @@
             </div>
         @endif
         @if (isset($isCheckout) && $isCheckout)
-            <h2 class="mt-3">Checkout</h2>
+            <h2 class="mt-3 pt-3 mb-3 text-center">Checkout</h2>
             <form action="{{ route('cart.placeOrder') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="d-flex justify-content-between
@@ -40,7 +40,7 @@
                 <button type="submit" class="btn btn-dark text-white mb-3">Place Order</button>
             </form>
         @else
-            <h2>Your Cart</h2>
+            <h2 class="mt-3">Your Cart</h2>
             @if ($cartItems->isEmpty())
                 <p>Your cart is empty.</p>
             @else
@@ -62,7 +62,7 @@
                                 <td>
                                     <button class="btn btn-danger btn-sm decrease-qty">-</button>
                                     <span class="qty">{{ $item->qty }}</span>
-                                    <button class="btn btn-success btn-sm increase-qty">+</button>
+                                    <button class="btn btn-success btn-sm increase-qty" @if($item->qty >= $item->products->stock) disabled @endif>+</button>
                                 </td>
                                 <td class="total-price">{{ $item->totalPrice }}</td>
                                 <td>

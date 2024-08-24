@@ -6,7 +6,7 @@
     @if($orders->isEmpty())
         <p>No orders found.</p>
     @else
-        <table class="table table-bordered">
+        <table class="table table-bordered table-responsive">
             <thead>
                 <tr>
                     <th>Car Model</th>
@@ -26,7 +26,10 @@
                         <td>{{ $order->qty }}</td>
                         <td>{{ $order->totalPrice }}</td>
                         <td>{{ ucfirst($order->status) }}</td>
-                        <td><img src="{{ asset('storage/' . $order->payment_screenshot) }}" width="100" height="100"></td>
+                        <td>
+                            <img src="{{ asset('storage/' . $order->payment_screenshot) }}" width="100" height="100" 
+                                 class="zoom zoom-out" onclick="toggleZoom(this)">
+                        </td>
                         <td>
                             @if($order->status == 'pending')
                                 <form action="{{ route('admin.orders.accept') }}" method="POST">
@@ -44,4 +47,16 @@
         </table>
     @endif
 </div>
+
+<script>
+    function toggleZoom(image) {
+        if (image.classList.contains('zoom-out')) {
+            image.classList.remove('zoom-out');
+            image.classList.add('zoom-in');
+        } else {
+            image.classList.remove('zoom-in');
+            image.classList.add('zoom-out');
+        }
+    }
+</script>
 @endsection

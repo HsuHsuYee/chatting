@@ -1,10 +1,8 @@
 @extends('admin.layout.app')
 @section('content')
-@section('content')
-<hr>
-<div class="container mt-3 bg-secondary p-3 text-info">
+<div class="container bg-secondary p-3 text-info">
     <h1 class="mb-4">Category List</h1>
-    <a href="{{ route('categoryCreate') }}" class="btn btn-info text-secondary mb-4">Create Category</a>
+    <a href="{{ route('categoryCreate') }}" class="btn btn-info text-dark mb-4">Create Category</a>
     @if ($message = Session::get('success'))
         <div id="successAlert" class="alert alert-success">
             <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
@@ -34,8 +32,8 @@
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
                     <td>
-                            <a href="{{ route('categoryEdit', $item->id) }}" class="btn btn-success text-light">Edit</a>
-                            <a href="{{ route('categoryDestory', $item->id) }}" class="btn btn-primary text-light">Delete</a>
+                            <a href="{{ route('categoryEdit', $item->id) }}" class="btn btn-success text-dark">Edit</a>
+                            <a href="{{ route('categoryDestory', $item->id) }}" class="btn btn-primary text-dark">Delete</a>
                     </td>
                 </tr>
                 @endforeach
@@ -43,5 +41,4 @@
         </table>
     </div>
 </div>
-@endsection
 @endsection

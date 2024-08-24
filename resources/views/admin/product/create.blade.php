@@ -1,10 +1,9 @@
 @extends('admin.layout.app')
 
 @section('content')
-<hr>
 <div class="container mt-3 bg-secondary text-info p-3">
     <span class="">Add Product</span>
-    <a href="{{ route('productList') }}" class="btn btn-info text-secondary float-end">Back</a>
+    <a href="{{ route('productList') }}" class="btn btn-info text-dark float-end">Back</a>
 
     <!-- Form for adding product -->
     <form action="{{ route('productStore') }}" class="mt-3" method="POST" enctype="multipart/form-data">
@@ -69,7 +68,7 @@
             <label for="madeIn">Made In</label>
             <input type="text" name="madeIn" id="madeIn" class="form-control" value="{{ old('madeIn') }}" required>
         </div>
-        <button type="submit" class="btn btn-info text-secondary mt-2">Add Product</button>
+        <button type="submit" class="btn btn-info text-dark mt-2">Add Product</button>
     </form>
 </div>
 

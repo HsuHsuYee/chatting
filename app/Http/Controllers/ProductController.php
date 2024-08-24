@@ -30,28 +30,13 @@ class ProductController extends Controller
         ]);
 
         // Create the category
-        $category = Category::create([
-            'name' => $validated['name'],
-        ]);
+        $category = new Category();
+        $category->name= $validated['name'];
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $path = $image->store('categories', 'public'); // Store image in 'public/subcategories'
-            $category->image = $path; // Save the image path to the database
-            $category->save();
+            $category->image = $request->file('image')->store('categories', 'public'); // Save the image path to the database
         }
-        // Handle image uploads if files are present
-        // if ($request->hasFile('images')) {
-        //     $images = [];
-        //     foreach ($request->file('images') as $image) {
-        //         // Store image in 'public/categories' directory and get the file path
-        //         $images[] = $image->store('categories', 'public');
-        //     }
-        //     // Store image paths as JSON in the database
-        //     $category->images = json_encode($images);
-        //     $category->save();
-        // }
-
+        $category->save();
         return redirect()->route('categoryList')->with('success', 'Category created successfully.');
     }
 
@@ -87,25 +72,7 @@ class ProductController extends Controller
             // Store the new image
             $category->image = $request->file('image')->store('categories', 'public');
         }
-        // Handle image uploads if files are present
-        // if ($request->hasFile('images')) {
-        //     // Delete old images
-        //     if ($category->images) {
-        //         $oldImages = json_decode($category->images, true);
-        //         foreach ($oldImages as $image) {
-        //             Storage::disk('public')->delete($image);
-        //         }
-        //     }
-
-        //     // Store new images
-        //     $images = [];
-        //     foreach ($request->file('images') as $image) {
-        //         $images[] = $image->store('categories', 'public');
-        //     }
-        //     // Store new image paths as JSON in the database
-        //     $category->images = json_encode($images);
-        // }
-
+        
         $category->save();
 
         return redirect()->route('categoryList')->with('success', 'Category updated successfully.');
@@ -139,23 +106,24 @@ class ProductController extends Controller
             'images.*' => 'nullable|image|mimes:jpeg,webp,png,jpg',
         ]);
 
-        $subcategory = SubCategory::create([
-            'name' => $validated['name'],
-            'category_id' => $validated['category_id'],
-        ]);
+        $subcategory =new SubCategory();
+        $subcategory->name = $validated['name'];
+        $subcategory->category_id = $validated['category_id'];
+        
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $path = $image->store('subcategories', 'public'); // Store image in 'public/subcategories'
             $subcategory->image = $path; // Save the image path to the database
-            $subcategory->save();
         }
+        $subcategory->save();
     
         return redirect()->route('subcategoryList')->with('success', 'SubCategory created successfully.', compact('subcategory'));
     }
 
     public function subcategoryCreate()
     {
-        return view('admin.subcategory.create');
+        $category = Category::get();
+        return view('admin.subcategory.create',compact('category'));
     }
 
     public function subcategoryEdit(Request $request, $id)

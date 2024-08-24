@@ -15,6 +15,10 @@ class Product extends Model
     protected $casts = [
         'images' => 'array',
     ];
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
     public function category()
     {
         return $this->belongsTo(Category::class);

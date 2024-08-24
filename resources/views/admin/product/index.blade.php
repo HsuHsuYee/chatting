@@ -1,10 +1,9 @@
 @extends('admin.layout.app')
 @section('content')
 @section('content')
-<hr>
 <div class="container mt-3 bg-secondary text-info p-3">
     <h1 class="mb-4">Product List</h1>
-    <a href="{{ route('productCreate') }}" class="btn btn-info text-secondary mb-4">Create Product</a>
+    <a href="{{ route('productCreate') }}" class="btn btn-info text-dark mb-4">Create Product</a>
     @if ($message = Session::get('success'))
         <div id="successAlert" class="alert alert-success">
             <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
@@ -50,8 +49,8 @@
                         {{-- @endforeach --}}
                     </td>
                     <td>
-                            <a href="{{ route('productEdit', $item->id) }}" class="btn btn-success text-light">Edit</a>
-                            <a href="{{ route('productDelete', $item->id) }}" class="btn btn-primary text-light">Delete</a>
+                            <a href="{{ route('productEdit', $item->id) }}" class="btn btn-success text-dark">Edit</a>
+                            <a href="{{ route('productDelete', $item->id) }}" class="btn btn-primary text-dark">Delete</a>
                     </td>
                 </tr>
                 @endforeach

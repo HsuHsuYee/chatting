@@ -15,6 +15,7 @@
                     <th>Quantity</th>
                     <th>Total</th>
                     <th>Status</th>
+                    <th>Order Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                         <td>{{ $order->qty }}</td>
                         <td>{{ $order->totalPrice }}</td>
                         <td>{{ ucfirst($order->status) }}</td>
+                        <td>{{ $order->updated_at }}</td>
                     </tr>
                 @endforeach
             </tbody>

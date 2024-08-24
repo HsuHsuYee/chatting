@@ -1,7 +1,6 @@
 @extends('admin.layout.app')
 
 @section('content')
-<hr>
 <div class="container mt-3 bg-secondary p-3 text-info">
     <span class="">Add Category</span>
     <a href="{{ route('categoryList') }}" class="btn btn-light text-dark float-end">Back</a>
@@ -13,9 +12,9 @@
         </div>
         <div class="form-group">
             <label for="image">Images</label>
-            <input type="file" name="image" id="image" class="form-control">
+            <input type="file" name="image" id="image" class="form-control">        
         </div>
-        <button type="submit" class="btn btn-info text-secondary mt-2">Add Category</button>
+        <button type="submit" class="btn btn-info text-dark mt-2">Add Category</button>
     </form>
 </div>
 @endsection
