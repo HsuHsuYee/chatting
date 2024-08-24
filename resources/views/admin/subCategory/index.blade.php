@@ -1,6 +1,6 @@
 @extends('admin.layout.app')
 @section('content')
-<div class="container mt-3 bg-secondary p-3 text-info">
+<div class="container mt-3 p-3 text-info">
     <h1 class="mb-4">SubCategory List</h1>
     <a href="{{ route('subcategoryCreate') }}" class="btn btn-info text-dark mb-4">Create Category</a>
     @if ($message = Session::get('success'))

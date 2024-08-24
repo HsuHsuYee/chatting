@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 @section('content')
 @section('content')
-<div class="container mt-3 bg-secondary text-info p-3">
+<div class="container mt-3 text-info p-3">
     <h1 class="mb-4">Product List</h1>
     <a href="{{ route('productCreate') }}" class="btn btn-info text-dark mb-4">Create Product</a>
     @if ($message = Session::get('success'))

@@ -26,7 +26,7 @@
                         <td>{{ $order->qty }}</td>
                         <td>{{ $order->totalPrice }}</td>
                         <td>{{ ucfirst($order->status) }}</td>
-                        <td>{{ $order->updated_at }}</td>
+                        <td>{{ $order->updated_at->format('d/m/Y') }}</td>
                     </tr>
                 @endforeach
             </tbody>

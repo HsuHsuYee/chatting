@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('content')
-<div class="container mt-3 bg-secondary p-3 text-info">
+<div class="container mt-3 p-3 text-info">
     <span class="">Add SubCategory</span>
     <a href="{{ route('subcategoryList') }}" class="btn btn-light text-dark float-end">Back</a>
     <form action="{{ route('subcategoryStore') }}" method="POST" class="mt-3" enctype="multipart/form-data">

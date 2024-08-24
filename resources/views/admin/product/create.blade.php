@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('content')
-<div class="container mt-3 bg-secondary text-info p-3">
+<div class="container mt-3 text-info p-3">
     <span class="">Add Product</span>
     <a href="{{ route('productList') }}" class="btn btn-info text-dark float-end">Back</a>
 
