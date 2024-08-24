@@ -1437,13 +1437,16 @@ $(document).ready(function () {
 
   // Image modal
   $("body").on("click", ".chat-image", function () {
-    let src = $(this).css("background-image").split(/"/)[1];
+    let src = $(this).find("img").attr("src");
+    console.log(src); // Debugging line
     $("#imageModalBox").show();
     $("#imageModalBoxSrc").attr("src", src);
-  });
-  $(".imageModal-close").on("click", function () {
+});
+
+$(".imageModal-close").on("click", function () {
     $("#imageModalBox").hide();
-  });
+});
+
 
   // Search input on focus
   $(".messenger-search").on("focus", function () {

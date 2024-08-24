@@ -9,6 +9,7 @@
         <table class="table table-bordered table-responsive">
             <thead>
                 <tr>
+                    <th>User</th>
                     <th>Car Model</th>
                     <th>Price</th>
                     <th>Quantity</th>
@@ -21,6 +22,7 @@
             <tbody>
                 @foreach($orders as $order)
                     <tr>
+                        <td>{{ $order->user->name }}</td>
                         <td>{{ $order->carModel }}</td>
                         <td>{{ $order->price }}</td>
                         <td>{{ $order->qty }}</td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Payment;
@@ -126,7 +127,7 @@ class CartController extends Controller
                 'status' => 'pending',
                 'payment_id' => $request->payment_id,
                 'phone' => $request->phone,
-                'address' => $request->address
+                'address' => $request->address,
             ]);
             $product = Product::where('id', $item->product_id)->first();
             $product->stock -= 1;
