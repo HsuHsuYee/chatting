@@ -50,7 +50,7 @@
                     </td>
                     <td>
                             <a href="{{ route('productEdit', $item->id) }}" class="btn btn-success text-dark">Edit</a>
-                            <a href="{{ route('productDelete', $item->id) }}" class="btn btn-primary text-dark">Delete</a>
+                            <a onclick="return confirm('Are you sure?')" href="{{ route('productDelete', $item->id) }}" class="btn btn-primary text-dark">Delete</a>
                     </td>
                 </tr>
                 @endforeach

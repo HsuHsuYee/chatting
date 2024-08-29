@@ -33,7 +33,7 @@
                     <td>{{ $item->name }}</td>
                     <td>
                             <a href="{{ route('categoryEdit', $item->id) }}" class="btn btn-success text-dark">Edit</a>
-                            <a href="{{ route('categoryDestory', $item->id) }}" class="btn btn-primary text-dark">Delete</a>
+                            <a onclick="return confirm('Are you sure?')" href="{{ route('categoryDestory', $item->id) }}" class="btn btn-primary text-dark">Delete</a>
                     </td>
                 </tr>
                 @endforeach
