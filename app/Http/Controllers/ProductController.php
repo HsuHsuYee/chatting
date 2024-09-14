@@ -332,7 +332,7 @@ class ProductController extends Controller
     {
         $subCategories = SubCategory::with('products', 'category')->where('category_id', $id)->get();
         $products = Product::where('sub_category_id', $id)->get();
-        $subCat = $products->where('sub_categroy_id',$id)->first();
+        $subCat = $products->where('sub_category_id',$id)->first();
         $subCatName = SubCategory::where('id',$subCat)->first();
         return view('user.subCategoryAllShow', compact('subCategories', 'products','subCat','subCatName'));
     }
@@ -362,8 +362,9 @@ class ProductController extends Controller
     public function searchCat(Request $request)
     {
         $search = $request->input('searchCat');
-        $searchId = $request->input('subCat');  
-        $products = Product::where('sub_category_id', $searchId)
+        $searchId = $request->subCat;
+        $subId=json_decode($searchId)->sub_category_id;
+        $products = Product::where('sub_category_id', $subId)
             ->where(function ($query) use ($search) {
                 $query->where('carModel', 'LIKE', '%' . $search . '%')
                     ->orWhere('price', 'LIKE', '%' . $search . '%')

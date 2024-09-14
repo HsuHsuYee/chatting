@@ -11,6 +11,7 @@
                 <tr>
                     <th>User</th>
                     <th>Car Model</th>
+                    <th>Product Name</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
@@ -24,6 +25,7 @@
                     <tr>
                         <td>{{ $order->user->name }}</td>
                         <td>{{ $order->carModel }}</td>
+                        <td>{{$order->carBrand}}</td>
                         <td>{{ $order->price }}</td>
                         <td>{{ $order->qty }}</td>
                         <td>{{ $order->totalPrice }}</td>

@@ -22,7 +22,7 @@ return new class extends Migration
         $table->integer('qty');
         $table->string('carModel');
         $table->decimal('price', 10, 2);
-        $table->string('carBrand')->nullable();
+        $table->string('carBrand');
         $table->string('madeIn')->nullable();
         $table->decimal('totalPrice', 10, 2);
         $table->string('status')->default('pending');

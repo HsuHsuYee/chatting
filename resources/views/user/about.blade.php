@@ -21,15 +21,19 @@
                         </h3>
 
                         <p class="stext-113 cl6 p-b-26">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat consequat enim, non auctor massa ultrices non. Morbi sed odio massa. Quisque at vehicula tellus, sed tincidunt augue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas varius egestas diam, eu sodales metus scelerisque congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas gravida justo eu arcu egestas convallis. Nullam eu erat bibendum, tempus ipsum eget, dictum enim. Donec non neque ut enim dapibus tincidunt vitae nec augue. Suspendisse potenti. Proin ut est diam. Donec condimentum euismod tortor, eget facilisis diam faucibus et. Morbi a tempor elit.
+                        Our website is an online platform dedicated to connecting car owners and enthusiasts with high-quality, reliable used auto parts. Our website serves as a trusted marketplace where users can conveniently buy and sell second-hand car parts. Each part listed is thoroughly inspected to ensure it meets our standards of quality and durability
                         </p>
 
                         <p class="stext-113 cl6 p-b-26">
-                            Donec gravida lorem elit, quis condimentum ex semper sit amet. Fusce eget ligula magna. Aliquam aliquam imperdiet sodales. Ut fringilla turpis in vehicula vehicula. Pellentesque congue ac orci ut gravida. Aliquam erat volutpat. Donec iaculis lectus a arcu facilisis, eu sodales lectus sagittis. Etiam pellentesque, magna vel dictum rutrum, neque justo eleifend elit, vel tincidunt erat arcu ut sem. Sed rutrum, turpis ut commodo efficitur, quam velit convallis ipsum, et maximus enim ligula ac ligula. 
-                        </p>
+                        Users can browse our extensive catalog of parts, ranging from engines and transmissions to smaller components like mirrors and headlights. Sellers can request permission to list their parts through a streamlined process, ensuring that only genuine and functional items are available on our site.
+</p>
+<p class="stext-113 cl6 p-b-26">With a commitment to sustainability and affordability, Good Second-Hand Car Parts offers a cost-effective solution for vehicle repairs and upgrades, while also contributing to reducing waste by extending the life of automotive components. Whether you're a mechanic, a DIY enthusiast, or just someone looking to maintain your vehicle, our platform provides a seamless, secure, and user-friendly experience.
+
+</p>
+
 
                         <p class="stext-113 cl6 p-b-26">
-                            Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+                            Any questions? Let us know AUNG SAN ROAD, PYAY,  or call us on 09764377247
                         </p>
                     </div>
                 </div>
@@ -51,7 +55,15 @@
                         </h3>
 
                         <p class="stext-113 cl6 p-b-26">
-                            Mauris non lacinia magna. Sed nec lobortis dolor. Vestibulum rhoncus dignissim risus, sed consectetur erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam maximus mauris sit amet odio convallis, in pharetra magna gravida. Praesent sed nunc fermentum mi molestie tempor. Morbi vitae viverra odio. Pellentesque ac velit egestas, luctus arcu non, laoreet mauris. Sed in ipsum tempor, consequat odio in, porttitor ante. Ut mauris ligula, volutpat in sodales in, porta non odio. Pellentesque tempor urna vitae mi vestibulum, nec venenatis nulla lobortis. Proin at gravida ante. Mauris auctor purus at lacus maximus euismod. Pellentesque vulputate massa ut nisl hendrerit, eget elementum libero iaculis.
+                        Our mission at Good Second-Hand Car Parts is to provide a reliable, affordable, and sustainable platform for buying and selling high-quality used auto parts. We are dedicated to ensuring that every part meets strict quality standards, offering cost-effective solutions for vehicle repairs, and promoting the reuse of automotive components to reduce waste.
+
+By creating a secure and user-friendly environment, we aim to connect car owners, mechanics, and enthusiasts, fostering a community that values sustainability and resourcefulness in vehicle maintenance.
+
+
+
+
+
+
                         </p>
                     </div>
                 </div>

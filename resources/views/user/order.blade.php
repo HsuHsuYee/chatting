@@ -11,7 +11,9 @@
             <thead>
                 <tr>
                     <th>Car Model</th>
+                    <th>Product Name</th>
                     <th>Price</th>
+            
                     <th>Quantity</th>
                     <th>Total</th>
                     <th>Status</th>
@@ -22,6 +24,7 @@
                 @foreach($orders as $order)
                     <tr>
                         <td>{{ $order->carModel }}</td>
+                        <td>{{$order->carBrand}}</td>
                         <td>{{ $order->price }}</td>
                         <td>{{ $order->qty }}</td>
                         <td>{{ $order->totalPrice }}</td>

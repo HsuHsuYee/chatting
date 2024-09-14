@@ -47,6 +47,7 @@
                 <thead>
                     <tr>
                         <th>Car Model</th>
+                        <th>Product Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
@@ -57,6 +58,7 @@
                     @foreach ($cartItems as $item)
                         <tr data-id="{{ $item->id }}" data-stock="{{ $item->products->stock }}">
                             <td>{{ $item->carModel }}</td>
+                            <td>{{$item->carBrand}}</td>
                             <td>{{ $item->price }}</td>
                             <td>
                                 <button class="btn btn-danger btn-sm decrease-qty">-</button>
